@@ -42,7 +42,8 @@ const History = (): React.ReactElement => {
             dataSetsData.map((dataSet) => (
               <TableRow key={dataSet.id}>
                 <TableCell>
-                  <TableLink to={reverse(routes.details, { asd: dataSet.id })}>
+                  <TableLink
+                    to={reverse(routes.details, { datasetId: dataSet.id })}>
                     {dataSet.name}
                   </TableLink>
                 </TableCell>

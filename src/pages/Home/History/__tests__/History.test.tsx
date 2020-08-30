@@ -1,8 +1,13 @@
+import userEvent from '@testing-library/user-event';
 import { AxiosPromise } from 'axios';
+import { reverse } from 'named-urls';
+
+import { createMemoryHistory } from 'history';
 import React from 'react';
 import { cache } from 'swr';
 import { screen, within } from '@testing-library/react';
 
+import routes from 'core/routes';
 import { DataSetResponse } from 'api/types';
 import API from 'api';
 import { DataSetResponseFactory } from 'tests/factories';
@@ -78,5 +83,28 @@ describe('<History />', () => {
         .getAllByRole('cell')
         .map((cell) => cell.textContent),
     ).toEqual(['Test dataset', 'Aug 28, 2020 4:14 PM']);
+  });
+
+  it('should go to details page when clicking on name', async () => {
+    mockedAPI.dataSets.mockResolvedValueOnce(({
+      data: [
+        DataSetResponseFactory.build({
+          id: 5,
+          name: 'Test dataset',
+        }),
+      ],
+    } as unknown) as AxiosPromise<DataSetResponse[]>);
+    const history = createMemoryHistory();
+
+    renderWithProvider(<History />, {
+      withRouter: true,
+      history,
+    });
+
+    userEvent.click(await screen.findByText('Test dataset'));
+
+    expect(history.location.pathname).toEqual(
+      reverse(routes.details, { datasetId: 5 }),
+    );
   });
 });

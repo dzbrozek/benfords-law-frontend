@@ -1,4 +1,5 @@
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
+import { MemoryHistory } from 'history/createMemoryHistory';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
@@ -12,6 +13,7 @@ import MUITheme from 'theme/mui';
 interface Config {
   withRouter?: boolean;
   withSnackbar?: boolean;
+  history?: MemoryHistory;
 }
 
 const TestFragment = ({
@@ -24,7 +26,11 @@ const TestFragment = ({
 
 export function renderWithProvider(
   component: React.ReactElement,
-  { withSnackbar = false, withRouter = false }: Config = {},
+  {
+    withSnackbar = false,
+    withRouter = false,
+    history = createMemoryHistory(),
+  }: Config = {},
 ): RenderResult {
   const Wrapper: React.FunctionComponent = ({ children }) => {
     const SnackbarComponent = withSnackbar ? SnackbarProvider : TestFragment;
@@ -38,9 +44,7 @@ export function renderWithProvider(
               dedupingInterval: 0,
             }}>
             <SnackbarComponent>
-              <RouterComponent history={createMemoryHistory()}>
-                {children}
-              </RouterComponent>
+              <RouterComponent history={history}>{children}</RouterComponent>
             </SnackbarComponent>
           </SWRConfig>
         </MUIThemeProvider>
