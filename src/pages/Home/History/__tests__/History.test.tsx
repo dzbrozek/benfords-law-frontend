@@ -22,6 +22,7 @@ const mockedAPI = API as jest.Mocked<typeof API>;
 describe('<History />', () => {
   afterEach(() => {
     cache.clear();
+    jest.clearAllMocks();
   });
 
   it('should render error', async () => {
@@ -83,6 +84,9 @@ describe('<History />', () => {
         .getAllByRole('cell')
         .map((cell) => cell.textContent),
     ).toEqual(['Test dataset', 'Aug 28, 2020 2:14 PM']);
+
+    expect(mockedAPI.dataSets).toHaveBeenCalledTimes(1);
+    expect(mockedAPI.dataSets).toHaveBeenCalledWith();
   });
 
   it('should go to details page when clicking on name', async () => {

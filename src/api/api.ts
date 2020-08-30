@@ -10,6 +10,13 @@ class API {
     });
   }
 
+  static dataSet(dataSetId: number): AxiosPromise<DataSetResponse> {
+    return API.request({
+      url: `/data-sets/${dataSetId}/`,
+      method: 'GET',
+    });
+  }
+
   static request<T = unknown>(config: AxiosRequestConfig): AxiosPromise<T> {
     return axios({
       ...config,
