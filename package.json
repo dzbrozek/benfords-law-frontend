@@ -22,6 +22,7 @@
     "@types/styled-components": "^5.1.2",
     "@types/yup": "^0.29.6",
     "axios": "^0.20.0",
+    "date-fns": "^2.16.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -50,8 +51,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --colors --watch --watchAll=false --env=jest-environment-jsdom-sixteen",
-    "test:ci": "CI=true react-scripts test --colors --coverage --env=jest-environment-jsdom-sixteen",
+    "test": "TZ=UTC react-scripts test --colors --watch --watchAll=false --env=jest-environment-jsdom-sixteen",
+    "test:ci": "CI=true yarn test --coverage",
     "test:all": "yarn lint && yarn typecheck && yarn test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",
