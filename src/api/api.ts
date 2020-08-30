@@ -17,6 +17,18 @@ class API {
     });
   }
 
+  static uploadDataSet(data: {
+    name: string;
+    columnName: string;
+    file: string;
+  }): AxiosPromise<DataSetResponse> {
+    return API.request({
+      url: '/data-sets/',
+      method: 'POST',
+      data,
+    });
+  }
+
   static request<T = unknown>(config: AxiosRequestConfig): AxiosPromise<T> {
     return axios({
       ...config,

@@ -6,6 +6,9 @@ Simple React app that allows you to verify your dataset against the Benford's la
 
 ### App
 
+![Home](assets/home.png)
+
+![Details](assets/details.png)
 
 #### Backend
 
