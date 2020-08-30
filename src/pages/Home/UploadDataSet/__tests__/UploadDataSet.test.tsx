@@ -136,12 +136,10 @@ describe('<UploadDataSet />', () => {
 
     it('should fail to upload new data set', async () => {
       mockedAPI.uploadDataSet.mockRejectedValueOnce(new Error('test error'));
-      const history = createMemoryHistory();
 
       renderWithProvider(<UploadDataSet />, {
         withSnackbar: true,
         withRouter: true,
-        history,
       });
 
       await uploadDataSet();
@@ -153,12 +151,10 @@ describe('<UploadDataSet />', () => {
 
     it('should cancel upload', async () => {
       mockedAPI.uploadDataSet.mockRejectedValueOnce(new Error('test error'));
-      const history = createMemoryHistory();
 
       renderWithProvider(<UploadDataSet />, {
         withSnackbar: true,
         withRouter: true,
-        history,
       });
 
       await act(async () => {

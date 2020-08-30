@@ -54,7 +54,7 @@ const UploadDataSet = (): React.ReactElement => {
     });
   }, [register]);
 
-  const handleCSVDrop = async (
+  const handleDrop = async (
     parsedData: unknown,
     file?: File,
   ): Promise<void> => {
@@ -109,86 +109,84 @@ const UploadDataSet = (): React.ReactElement => {
   };
 
   return (
-    <Box marginBottom={4}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {stateError ? (
-          <Box marginY={2}>
-            <FormHelperText error>{stateError}</FormHelperText>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {uploadStep === UploadStep.SelectFile ? (
+        <CSVReader
+          onDrop={handleDrop}
+          onError={handleDropError}
+          config={{
+            preview: 1,
+          }}>
+          <span>Click to upload a new data set</span>
+        </CSVReader>
+      ) : null}
+
+      {uploadStep === UploadStep.SelectColumn ? (
+        <>
+          <p>Name your data set and select column with values to compare.</p>
+
+          {stateError ? (
+            <Box marginY={2}>
+              <FormHelperText error>{stateError}</FormHelperText>
+            </Box>
+          ) : null}
+
+          <Box marginTop={2}>
+            <TextField
+              autoFocus
+              id="name"
+              name="name"
+              label="Name"
+              fullWidth
+              placeholder="Name your data set"
+              inputRef={register}
+              error={!!errors.name?.message}
+              helperText={errors.name?.message}
+            />
           </Box>
-        ) : null}
 
-        {uploadStep === UploadStep.SelectFile ? (
-          <CSVReader
-            onDrop={handleCSVDrop}
-            onError={handleDropError}
-            config={{
-              preview: 1,
-            }}>
-            <span>Click to upload a new data set</span>
-          </CSVReader>
-        ) : null}
+          <Box marginTop={2}>
+            <TextField
+              id="columnName"
+              name="columnName"
+              label="Column Name"
+              fullWidth
+              select
+              inputRef={register}
+              error={!!errors.columnName?.message}
+              helperText={errors.columnName?.message}
+              disabled={!columns.length}
+              onChange={(e) => setValue('columnName', e.target.value)}>
+              {columns.map((column) => (
+                <MenuItem key={column.value} value={column.value}>
+                  {column.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
 
-        {uploadStep === UploadStep.SelectColumn ? (
-          <>
-            <p>Name your data set and select column with values to compare.</p>
-
-            <Box marginTop={2}>
-              <TextField
-                autoFocus
-                id="name"
-                name="name"
-                label="Name"
-                fullWidth
-                placeholder="Name your data set"
-                inputRef={register}
-                error={!!errors.name?.message}
-                helperText={errors.name?.message}
-              />
-            </Box>
-
-            <Box marginTop={2}>
-              <TextField
-                id="columnName"
-                name="columnName"
-                label="Column Name"
-                fullWidth
-                select
-                inputRef={register}
-                error={!!errors.columnName?.message}
-                helperText={errors.columnName?.message}
-                disabled={!columns.length}
-                onChange={(e) => setValue('columnName', e.target.value)}>
-                {columns.map((column) => (
-                  <MenuItem key={column.value} value={column.value}>
-                    {column.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Box>
-
-            <Box marginTop={2} display="flex" justifyContent="flex-end">
-              <Box marginRight={2}>
-                <Button
-                  color="secondary"
-                  variant="outlined"
-                  type="submit"
-                  onClick={() => setUploadStep(UploadStep.SelectFile)}>
-                  Cancel
-                </Button>
-              </Box>
-
+          <Box marginTop={2} display="flex" justifyContent="flex-end">
+            <Box marginRight={2}>
               <Button
-                color="primary"
+                color="secondary"
                 variant="outlined"
                 type="submit"
-                disabled={isUploading}>
-                Upload
+                onClick={() => setUploadStep(UploadStep.SelectFile)}>
+                Cancel
               </Button>
             </Box>
-          </>
-        ) : null}
-      </form>
-    </Box>
+
+            <Button
+              color="primary"
+              variant="outlined"
+              type="submit"
+              disabled={isUploading}>
+              Upload
+            </Button>
+          </Box>
+        </>
+      ) : null}
+    </form>
   );
 };
 
