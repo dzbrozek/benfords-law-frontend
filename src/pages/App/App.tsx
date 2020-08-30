@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 import { SnackbarProvider } from 'notistack';
 import { SWRConfig } from 'swr';
 import { Router } from 'react-router';
@@ -28,7 +29,9 @@ function App(): React.ReactElement {
             <Router history={history}>
               <NavBar />
 
-              <Routing />
+              <Box padding={2}>
+                <Routing />
+              </Box>
             </Router>
           </SnackbarProvider>
         </SWRConfig>

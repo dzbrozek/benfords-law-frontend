@@ -1,11 +1,10 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Link } from 'react-router-dom';
 
 import routes from 'core/routes';
 
-import { Title } from './styles';
+import { Title, TitleLink } from './styles';
 
 const NavBar = (): React.ReactElement => {
   const title = "Benford's law";
@@ -13,9 +12,9 @@ const NavBar = (): React.ReactElement => {
     <>
       <AppBar position="static">
         <Toolbar>
-          <Link to={routes.home}>
+          <TitleLink to={routes.home}>
             <Title variant="h6">{title}</Title>
-          </Link>
+          </TitleLink>
         </Toolbar>
       </AppBar>
     </>
