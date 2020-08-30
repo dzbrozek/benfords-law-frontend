@@ -51,8 +51,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --colors --watch --watchAll=false --env=jest-environment-jsdom-sixteen",
-    "test:ci": "CI=true react-scripts test --colors --coverage --env=jest-environment-jsdom-sixteen",
+    "test": "TZ=UTC react-scripts test --colors --watch --watchAll=false --env=jest-environment-jsdom-sixteen",
+    "test:ci": "CI=true yarn test --coverage",
     "test:all": "yarn lint && yarn typecheck && yarn test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",

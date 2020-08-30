@@ -82,7 +82,7 @@ describe('<History />', () => {
       within(rows[1])
         .getAllByRole('cell')
         .map((cell) => cell.textContent),
-    ).toEqual(['Test dataset', 'Aug 28, 2020 4:14 PM']);
+    ).toEqual(['Test dataset', 'Aug 28, 2020 2:14 PM']);
   });
 
   it('should go to details page when clicking on name', async () => {
